@@ -1,0 +1,34 @@
+{
+  "name": "fullstackwiki-ci",
+  "version": "0.0.0",
+  "description": "Publishes changes to Fullstack.wiki",
+  "author": "Austin Wright <aaa@bzfx.net>",
+  "license": "Unlicense",
+  "keywords": [
+    "probot-app"
+  ],
+  "scripts": {
+    "dev": "nodemon",
+    "start": "probot run ./index.js",
+    "lint": "standard --fix",
+    "test": "mocha && eslint",
+    "test:watch": "mocha --watch --notify --notifyMode=change --coverage"
+  },
+  "dependencies": {
+    "probot": "^7.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "smee-client": "^1.0.2"
+  },
+  "engines": {
+    "node": ">= 8.3.0"
+  },
+  "nodemonConfig": {
+    "exec": "npm start",
+    "watch": [
+      ".env",
+      "."
+    ]
+  }
+}
