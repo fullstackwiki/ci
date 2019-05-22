@@ -1,7 +1,7 @@
 "use strict";
 
 var child_process = require('child_process');
-var libgit = require('isomorphic-git');
+//var libgit = require('isomorphic-git');
 
 // Deployments API example
 // See: https://developer.github.com/v3/repos/deployments/ to learn more
@@ -41,7 +41,7 @@ module.exports = function(app){
 		var ref = event.head_commit.id;
 
 		// Probot API note: context.repo() => { username: 'hiimbex', repo: 'testing-things' }
-		const res = await context.github.repos.createDeployment(context.repo({
+		const res = {} || await context.github.repos.createDeployment(context.repo({
 			// The ref to deploy. This can be a branch, tag, or SHA.
 			ref: ref,
 
@@ -94,6 +94,7 @@ module.exports = function(app){
 		app.log(event);
 
 		const startTime = new Date();
+		const head_sha = event.check_suite.head_sh;
 
 		var check = await context.github.checks.create(context.repo({
 			name: 'Fullstack.wiki CI',

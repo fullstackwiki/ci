@@ -1,12 +1,13 @@
 #!/bin/bash
 set -x
-git --git-dir=cache.git worktree remove --force *.work
+# DATA=$(pwd)
+# git --git-dir="$DATA" worktree remove --force *.work
 if [ -d cache.git ]; then
-    pushd cache.git
-    git fetch
-    popd
+	pushd cache.git
+	git fetch
+	popd
 else
-    git clone --bare $1 cache.git
+	git clone --bare $1 cache.git
 fi
 git clone cache.git $2.work
 pushd $2.work
