@@ -68,8 +68,12 @@ module.exports = function(app){
 		// 	url: event.repository.clone_url,
 		// 	ref: ref,
 		// });
-		console.log('Spawn build...', ['/bin/bash', __dirname+'/setup.sh', event.repository.clone_url, ref]);
-		var child = child_process.spawn('/bin/bash', [__dirname+'/setup.sh', event.repository.clone_url, ref]);
+		var spawnArgs = [__dirname+'/setup.sh', event.repository.clone_url, ref];
+		// var spawnEnv = Object.create(process.env);
+		// spawnEnv.FORCE_COLOR = 2;
+		// var spawnOpts = { env: spawnEnv,	};
+		console.log('Spawn build...', spawnArgs);
+		var child = child_process.spawn('/bin/bash', spawnArgs);
 		child.stdout.pipe(process.stdout);
 		child.stderr.pipe(process.stdout);
 		// child.stdout.on('data', function(){ });
@@ -78,6 +82,7 @@ module.exports = function(app){
 		});
 		console.log('Done');
 
+		return;
 		const deploymentId = res.data.id;
 		await context.github.repos.createDeploymentStatus(context.repo({
 			deployment_id: deploymentId,
@@ -94,13 +99,13 @@ module.exports = function(app){
 		app.log(event);
 
 		const startTime = new Date();
-		const head_sha = event.check_suite.head_sh;
+		const head_sha = event.check_suite.head_sha;
 
 		var check = await context.github.checks.create(context.repo({
 			name: 'Fullstack.wiki CI',
 			head_branch: event.check_suite.head_branch,
 			head_sha: event.check_suite.head_sha,
-			details_url: 'https://fullstack.wiki/ci/'+head_sha+'.xhtml',
+			details_url: 'https://fullstack.wiki/ci/'+head_sha,
 			status: 'queued',
 			started_at: startTime,
 		}));
@@ -109,7 +114,7 @@ module.exports = function(app){
 			name: 'Fullstack.wiki CI',
 			head_branch: event.check_suite.head_branch,
 			head_sha: event.check_suite.head_sha,
-			details_url: 'https://fullstack.wiki/ci/'+head_sha+'.xhtml',
+			details_url: 'https://fullstack.wiki/ci/'+head_sha,
 			status: 'in_progress',
 			started_at: startTime,
 		}));
@@ -119,7 +124,7 @@ module.exports = function(app){
 			name: 'Fullstack.wiki CI',
 			head_branch: event.check_suite.head_branch,
 			head_sha: event.check_suite.head_sha,
-			details_url: 'https://fullstack.wiki/ci/'+head_sha+'.xhtml',
+			details_url: 'https://fullstack.wiki/ci/'+head_sha,
 			status: 'completed',
 			started_at: startTime,
 			conclusion: 'success',
