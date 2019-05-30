@@ -21,7 +21,7 @@ module.exports = function(app){
 		// Then sets the deployment status to success
 		// NOTE: this example doesn't actually integrate with a cloud
 		// provider to deploy your app, it just demos the basic API usage.
-		app.log(event);
+		// app.log(event);
 
 		if(event.ref !== 'refs/heads/master'){
 			app.log('Event not for master branch');
@@ -96,7 +96,7 @@ module.exports = function(app){
 
 	app.on(['check_suite.requested', 'check_run.rerequested'], async function check(context){
 		var event = context.payload;
-		app.log(event);
+		// app.log(event);
 
 		const startTime = new Date();
 		const head_sha = event.check_suite.head_sha;

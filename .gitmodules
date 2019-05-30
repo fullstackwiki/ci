@@ -1,0 +1,3 @@
+[submodule "dive-publish-aws"]
+	path = dive-publish-aws
+	url = https://github.com/awwright/dive-publish-aws.git
