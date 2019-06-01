@@ -4,7 +4,7 @@ if [ -d cache.git ]; then
 	git fetch
 	popd
 else
-	git clone --bare $1 cache.git
+	git clone --bare --mirror $1 cache.git
 fi
 if [ -n "$2" ]; then
 	COMMIT="$2"
