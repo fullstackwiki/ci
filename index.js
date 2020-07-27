@@ -17,10 +17,6 @@ module.exports = function(app){
 	app.on(['push'], async function(context){
 		var event = context.payload;
 
-		// Creates a deployment on a pull request event
-		// Then sets the deployment status to success
-		// NOTE: this example doesn't actually integrate with a cloud
-		// provider to deploy your app, it just demos the basic API usage.
 		// app.log(event);
 
 		if(event.ref !== 'refs/heads/master'){
